@@ -2,7 +2,7 @@
 
 const program = require('commander'),
 	{prompt} = require('inquirer'),
-	app = require('./build')
+	{app} = require('./build')
 	shell = require('shelljs');
 
 
@@ -21,8 +21,7 @@ program
 		}).then(answer => {
 			const name = answer.name;
 			app.base(name);  
-			app.install(name);
-
+			app.install(name); 
 		})
 	})
 
