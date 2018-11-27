@@ -1,4 +1,4 @@
-export default class App {
+class myApp {
 	base(path){
 		if (shell){
 			shell.exec(`create-react-app ${path}`);
@@ -20,3 +20,7 @@ export default class App {
 		}
 	}
 }
+
+const app = new myApp();
+
+module.exports = { app }
