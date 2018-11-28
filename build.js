@@ -1,12 +1,16 @@
 const chalk = require('chalk'),
 	shell = require('shelljs'),
-	ora = require('ora');
+	ora = require('ora'),
+	s = require('string'),
+	isType = require('check-types'),
+	boxen = require('boxen'),
+	fs = require('fs');
 
 class myApp {
 
 	welcome() {
-		if (shell) {
-			shell.echo(chalk.keyword('orange').bold('\nCreate-react-site CLI\n'))
+		if (shell) { 
+			shell.echo(boxen(chalk.orange.bold('\nLedkyb CLI\n'), {padding: 1, borderStyle: 'round'}))
 		}
 	}
 
@@ -56,6 +60,44 @@ class myApp {
 				//spinner.succeed();  // call in the next promise once its resolved
 			});
 		}
+	}
+
+	logError(e){
+		if (chalk){
+			return chalk.keyword('red')(e + ' \n');
+		}
+	}
+
+	getPackage(dir) {
+		return new Promise((resolve, reject) => {
+			fs.readFile(dir + '/package.json', "latin1", (error, data) => {
+				try {
+					if (error) throw error;
+
+					resolve(data);
+				} catch (error) {
+					reject(error);
+				}
+			})
+		})
+	}
+
+	/**
+	 * 
+	 * @param {string} dir 
+	 * @param {string} option 
+	 */
+	readPackage(dir, option) {
+		this.getPackage(dir).then(response => {
+			let myPackage = typeof response === 'string' ? JSON.parse(response) : response;
+			console.log('\n' + chalk.keyword('orange')(s(option).capitalize() + ': ' + myPackage[option]));
+		}).catch(error => {
+			console.trace(this.logError(error));
+		})  
+	}
+
+	updatePackage() {
+			// test
 	}
 
 	success(){
