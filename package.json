@@ -6,9 +6,11 @@
   "author": "lloan alas",
   "license": "MIT",
   "dependencies": {
-    "colors": "^1.3.2",
+    "chalk": "^2.4.1", 
     "commander": "^2.19.0",
     "inquirer": "^6.2.0",
+    "ora": "^3.0.0",
+    "ora-promise": "^1.0.0",
     "shelljs": "^0.8.3"
   }
 }
