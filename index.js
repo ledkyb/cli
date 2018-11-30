@@ -1,23 +1,28 @@
 #!/usr/bin/env node
 
 const program = require('commander'),
-	  chalk = require('chalk'),
-	  isType = require('check-types'),
-	  { prompt } = require('inquirer'),
-      { app } = require('./build');
+	chalk = require('chalk'),
+	isType = require('check-types'),
+	{
+		prompt
+	} = require('inquirer'),
+	{
+		app
+	} = require('./src/build'),
+	{questions} = require('./src/prompts');
 
 
 program
 	.version('1.0.0')
-	.description('Ledkyb Studios command-line interface tool');
- 
+	.description(chalk.bold('CLI for Ledkyb Studios') + '\nBuilt to simplify development.');
+
 program
 	.command('info <dir>')
 	.alias('i')
 	.description('Retrieve information within package.json file.')
 	.option("--o, --option <prop>", "Property to retrieve.")
-	.action((dir, options) => { 
-		try { 
+	.action((dir, options) => {
+		try {
 			if (!isType.string(options.option)) throw 'Option was incorrectly set?'; // check if option is set 
 			if (!isType.string(dir)) throw 'Directory must be a string!'; // check if option is set 
 
@@ -28,16 +33,17 @@ program
 	})
 
 program
-	.command('start')
+	.command('create')
 	.description('create a starter environment for building react sites')
-	.alias('s')
-	.option("--n, --name <name>", "Project name.")
-	.action(options => {
- 
-		app.initMessage();
+	.alias('c')
+	.action(() => {
+		prompt(questions.create).then(answers => { 
+			app.initMessage();
 
-		console.log(options.name);
-		//app.init(options.name);
+			
+			app.init(answers);
+			console.log(answers);
+		}); 
 	})
 
 program

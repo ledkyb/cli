@@ -21,48 +21,48 @@ class myApp {
 		shell.echo(chalk.keyword('orange')('\nYour project will begin building now...\n\n'))
 	}
 
-	init(input) {
+	init(path) {
 
-		 
 		// while a spinner is running, if you echo, you will get a duplicate without a check mark
 
-	 
-		new Promise((resolve, reject) => {
-			let spinner = ora('\nLoading CRA...').start();
-			console.log(input.directory);
-			shell.exec(`create-react-app ${input.directory}`, {
-				async: true,
-				silent: true
-			}, () => {
-				spinner.succeed('CRA loaded as base!');
-				resolve(true);
+		if (shell) {
+
+			new Promise((resolve, reject) => {
+				let spinner = ora('\nLoading CRA...').start();
+				shell.exec(`create-react-app ${path}`, {
+					async: true,
+					silent: true
+				}, () => {
+					spinner.succeed('CRA loaded as base!');
+					resolve(true);
+				});
+
+			}).then(response => {
+				this.install(path);
+				//spinner.succeed();  // call in the next promise once its resolved
 			});
-
-		}).then(response => {
-			this.install(input);
-			//spinner.succeed();  // call in the next promise once its resolved
-		});
-
+		}
 	}
 
-	install(input) { 
+	install(path) {
+		if (shell) {
 
-		new Promise((resolve, reject) => {
-			let spinner = ora('\nInstalling additional packages...').start();
+			new Promise((resolve, reject) => {
+				let spinner = ora('\nInstalling additional packages...').start();
 
-			shell.cd(input.directory);
-			shell.exec(`yarn add colors ${input.modules}`, {
-				async: true,
-				silent: true
-			}, () => {
-				spinner.succeed('Additional packages installed!');
-				resolve(input);
+				shell.cd(path);
+				shell.exec(`yarn add colors`, {
+					async: true,
+					silent: true
+				}, () => {
+					spinner.succeed('Additional packages installed!');
+					resolve(true);
+				});
+
+			}).then(response => {
+				//spinner.succeed();  // call in the next promise once its resolved
 			});
-
-		}).then(response => {
-			shell.echo(input);
-			spinner.succeed('Done!'); // call in the next promise once its resolved
-		});
+		}
 	}
 
 	logError(e) {
@@ -94,9 +94,9 @@ class myApp {
 			if (shell) {
 				let myPackage = typeof response === 'string' ? JSON.parse(response) : response;
 				let response = option === 'all' ? myPackage : myPackage[option];
-
+				
 				shell.echo('\n' + chalk.keyword('orange')(s(option).capitalize() + ': ' + response));
-
+				
 			}
 		}).catch(error => {
 			console.trace(this.logError(error));
