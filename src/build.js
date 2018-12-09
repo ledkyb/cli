@@ -21,15 +21,16 @@ class myApp {
 		shell.echo(chalk.keyword('orange')('\nYour project will begin building now...\n\n'))
 	}
 
-	init(path) {
+	init(answers) {
 
 		// while a spinner is running, if you echo, you will get a duplicate without a check mark
 
 		if (shell) {
 
 			new Promise((resolve, reject) => {
+				console.log(answers);
 				let spinner = ora('\nLoading CRA...').start();
-				shell.exec(`create-react-app ${path}`, {
+				shell.exec(`yarn create react-app ${answers.directory}`, {
 					async: true,
 					silent: true
 				}, () => {
@@ -38,7 +39,7 @@ class myApp {
 				});
 
 			}).then(response => {
-				this.install(path);
+				this.install(answers.directory);
 				//spinner.succeed();  // call in the next promise once its resolved
 			});
 		}
@@ -51,7 +52,7 @@ class myApp {
 				let spinner = ora('\nInstalling additional packages...').start();
 
 				shell.cd(path);
-				shell.exec(`yarn add colors`, {
+				shell.exec(`yarn add bootstrap`, {
 					async: true,
 					silent: true
 				}, () => {
@@ -84,11 +85,8 @@ class myApp {
 			})
 		})
 	}
-	/**
-	 * 
-	 * @param {string} dir 
-	 * @param {string} option 
-	 */
+
+	
 	readPackage(dir, option) {
 		this.getPackage(dir).then(response => {
 			if (shell) {
@@ -101,8 +99,8 @@ class myApp {
 		}).catch(error => {
 			console.trace(this.logError(error));
 		})
-	}
-
+	} 
+	
 	updatePackage() {
 		// test
 	}
