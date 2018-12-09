@@ -1,7 +1,7 @@
 const questions = {
 	create: [{
 			type: 'input',
-			name: 'project',
+			name: 'name',
 			message: 'Enter project name (newApp) ...'
 		},
 		{

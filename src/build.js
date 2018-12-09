@@ -87,24 +87,25 @@ class myApp {
 	}
 
 	
-	readPackage(dir, option) {
-		this.getPackage(dir).then(response => {
+	updatePackage(answers) {
+		
+		this.getPackage(answers.directory).then(response => {
 			if (shell) {
 				let myPackage = typeof response === 'string' ? JSON.parse(response) : response;
-				let response = option === 'all' ? myPackage : myPackage[option];
-				
-				shell.echo('\n' + chalk.keyword('orange')(s(option).capitalize() + ': ' + response));
+				 
+				myPackage['author'] = answers['author'];
+				myPackage['name'] = answers['name'];
+				myPackage['version'] = answers['version'];
+
+				shell.exec(`echo ${myPackage} > ${answers.directory + '/package.json'} `)
+				//shell.echo('\n' + chalk.keyword('orange')(s(option).capitalize() + ': ' + response));
 				
 			}
 		}).catch(error => {
 			console.trace(this.logError(error));
 		})
 	} 
-	
-	updatePackage() {
-		// test
-	}
-
+ 
 	success() {
 		shell.echo(chalk.keyword('green').bold('\nProject created successfully!\n'))
 		shell.echo(chalk.keyword('green')(`\nYou can navigate to ${path}\\ and `) + chalk.keyword('orange')(`yarn start\n`))
