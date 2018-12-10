@@ -38,8 +38,8 @@ program
 	.alias('c')
 	.action(() => {
 		prompt(questions.create).then(answers => { 
+			app.welcome();
 			app.initMessage(); 
-			
 			app.init(answers);  
 		}); 
 	})

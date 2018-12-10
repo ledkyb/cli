@@ -2,26 +2,11 @@ const questions = {
 	create: [{
 			type: 'input',
 			name: 'name',
-			message: 'Enter project name (newApp) ...'
-		},
-		{
-			type: 'input',
-			name: 'directory',
-			message: 'Enter directory name (myProject) ...'
-		},
-		{
-			type: 'input',
-			name: 'author',
-			message: 'Enter author name ...'
-		},
-		{
-			type: 'input',
-			name: 'version',
-			message: 'Enter project version (1.0.0) ...'
+			message: 'Enter project name (myApp) ...'
 		}, {
 			type: 'input',
 			name: 'modules',
-			message: 'Additional modules [mod1 mod2 mod3]...'
+			message: 'Extra modules [mod1 mod2 mod3]...'
 		}
 	]
 };
