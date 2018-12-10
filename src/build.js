@@ -4,6 +4,7 @@ const chalk = require('chalk'),
 	s = require('string'),
 	isType = require('check-types'),
 	boxen = require('boxen'),
+	jsonfile = require('jsonfile'),
 	fs = require('fs');
 
 class myApp {
@@ -39,19 +40,19 @@ class myApp {
 				});
 
 			}).then(response => {
-				this.install(answers.directory);
+				this.install(answers);
 				//spinner.succeed();  // call in the next promise once its resolved
 			});
 		}
 	}
 
-	install(path) {
+	install(answers) {
 		if (shell) {
 
 			new Promise((resolve, reject) => {
 				let spinner = ora('\nInstalling additional packages...').start();
 
-				shell.cd(path);
+				shell.cd(answers.directory);
 				shell.exec(`yarn add bootstrap`, {
 					async: true,
 					silent: true
@@ -61,7 +62,7 @@ class myApp {
 				});
 
 			}).then(response => {
-				//spinner.succeed();  // call in the next promise once its resolved
+				//this.updatePackage(answers); 
 			});
 		}
 	}
@@ -71,39 +72,35 @@ class myApp {
 			return chalk.keyword('red')(e + ' \n');
 		}
 	}
-
-	getPackage(dir) {
-		return new Promise((resolve, reject) => {
-			fs.readFile(dir + '/package.json', "latin1", (error, data) => {
-				try {
-					if (error) throw error;
-
-					resolve(data);
-				} catch (error) {
-					reject(error);
-				}
-			})
-		})
-	}
-
-	
+  
 	updatePackage(answers) {
-		
-		this.getPackage(answers.directory).then(response => {
-			if (shell) {
-				let myPackage = typeof response === 'string' ? JSON.parse(response) : response;
-				 
-				myPackage['author'] = answers['author'];
+		if (shell) {
+		 
+			new Promise((resolve, reject) => {
+				let spinner = ora('\nFinishing up...').start();
+				const file = answers.directory + '/package.json';
+
+				
+				let myPackage = jsonfile.readFile(file); 
+				
+				myPackage['author'] = answers['author']; 
 				myPackage['name'] = answers['name'];
 				myPackage['version'] = answers['version'];
 
-				shell.exec(`echo ${myPackage} > ${answers.directory + '/package.json'} `)
-				//shell.echo('\n' + chalk.keyword('orange')(s(option).capitalize() + ': ' + response));
-				
-			}
-		}).catch(error => {
-			console.trace(this.logError(error));
-		})
+				jsonfile.writeFileSync(file, myPackage, { spaces: 2 })
+					.then(res => {
+						spinner.succeed('Project finished!');
+						resolve(true);
+					})   
+			}).then(response => {
+				 console.log('done!');
+			}).catch(err => {
+				console.log(err);
+			});
+		}
+
+		 
+	 
 	} 
  
 	success() {

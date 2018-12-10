@@ -38,10 +38,9 @@ program
 	.alias('c')
 	.action(() => {
 		prompt(questions.create).then(answers => { 
-			// app.initMessage(); 
+			app.initMessage(); 
 			
-			// app.init(answers);  
-			app.updatePackage(answers);
+			app.init(answers);  
 		}); 
 	})
 
