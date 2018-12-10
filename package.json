@@ -1,24 +1,23 @@
 {
-  "name": "ledkyb-cli",
-  "version": "1.0.2",
+  "name": "@ledkyb/cli",
+  "version": "1.0.0",
   "description": "Ledkyb Studios command-line interface tool",
   "main": "index.js",
   "author": "lloan alas",
+  "bin": {
+    "ledkyb-cli": "./index.js"
+  },
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^4.1.3",
     "boxen": "^2.0.0",
     "chalk": "^2.4.1",
     "check-types": "^7.4.0",
-    "colors": "^1.3.3",
     "commander": "^2.19.0",
     "create-react-app": "^2.1.1",
     "inquirer": "^6.2.0",
-    "jsonfile": "^5.0.0",
     "ora": "^3.0.0",
     "ora-promise": "^1.0.0",
     "shelljs": "^0.8.3",
-    "string": "^3.3.3",
     "yarn": "^1.12.3"
   }
 }
