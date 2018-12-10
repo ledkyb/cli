@@ -5,7 +5,7 @@ Simple CLI that creates a react app with additional modules.
 
 ## Installation
 
-  `npm install @ledkyb/cli`
+  `npm install ledkyb-cli`
 
 ## Usage
 
