@@ -1,5 +1,5 @@
 {
-  "name": "cli",
+  "name": "@ledkyb/cli",
   "version": "1.0.0",
   "description": "Ledkyb Studios command-line interface tool",
   "main": "index.js",
