@@ -9,7 +9,7 @@ Simple CLI that creates a react app with additional modules.
 
 ## Usage
 
-    ledkyb create 
+    ledkyb-cli create 
   
   
   The CLI will prompt you for a project name, which will be used as the directory name for your React project, along with any modules you want to add to your app. 
